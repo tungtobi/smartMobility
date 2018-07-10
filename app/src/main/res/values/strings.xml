@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Smart Delivery</string>
+    <string name="title_activity_login">Đăng nhập</string>
+    <string name="title_activity_register">Đăng kí</string>
+    <string name="title_activity_read_list">Lịch sử nhận hàng</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_account">Email</string>
+    <string name="prompt_password">Mật khẩu</string>
+    <string name="prompt_password_twice">Nhập lại mật khẩu</string>
+    <string name="action_sign_in">Đăng nhập</string>
+    <string name="action_register">Đăng kí</string>
+    <string name="action_sign_in_short">Đăng nhập</string>
+    <string name="error_invalid_email">Không tồn tại tài khoản</string>
+    <string name="error_invalid_password">Mật khẩu quá ngắn</string>
+    <string name="error_incorrect_password">Sai mật khẩu</string>
+    <string name="error_field_required">Bắt buộc điền</string>
+    <string name="permission_rationale">"Xem lại."</string>
+
+    <!-- String related to dashboard -->
+    <string name="dashboard">Bảng điều khiển</string>
+    <string name="account_admin">Quản trị viên</string>
+    <string name="account_shipper">Shipper Test</string>
+    <string name="menu_box">QUẢN LÝ TỦ</string>
+    <string name="menu_getPackage">LẤY HÀNG</string>
+    <string name="menu_order">XEM ĐƠN HÀNG</string>
+    <string name="menu_account">TÀI KHOẢN</string>
+    <string name="menu_setting">CÀI ĐẶT</string>
+
+    <!-- String related to get QR Code -->
+    <string name="get_qr_code">Lấy mã QR</string>
+    <string name="qr_describe">Đưa mã QR trước camera để mở tủ</string>
+    <string name="again">Thử lại</string>
+    <string name="quit">Thoát</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+</resources>
