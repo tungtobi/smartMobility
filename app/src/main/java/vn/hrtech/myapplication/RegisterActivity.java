@@ -31,6 +31,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,6 +85,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private EditText mPasswordViewAgain;
+    private RadioGroup mRadioGroup;
+    private RadioButton mRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             }
         });
 
+        mRadioGroup = (RadioGroup)findViewById(R.id.radioGroup);
+
         Button mRegisterButton = (Button) findViewById(R.id.email_register_button);
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -114,6 +120,12 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             }
         });
 
+    }
+
+    public void checkButton(View v) {
+        int radioId = mRadioGroup.getCheckedRadioButtonId();
+        mRadioButton = (RadioButton)findViewById(radioId);
+        Toast.makeText(this, mRadioButton.getText(), Toast.LENGTH_LONG).show();
     }
 
     private void populateAutoComplete() {
@@ -161,6 +173,12 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mPasswordViewAgain.setError(null);
+
+        // Check radio button
+        String role = mRadioButton.getText().toString().equals("Shipper") ? "Shipper" : "CUSTOMER";
+
+        Toast.makeText(this, role, Toast.LENGTH_LONG).show();
 
         // Store values at the time of the login attempt.
         final String email = mEmailView.getText().toString();
@@ -202,11 +220,11 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            post(email, password);
+            post(email, password, role);
         }
     }
 
-    private void post(String email, String pass) {
+    private void post(String email, String pass, String role) {
         String reg_url = "http://18.188.242.150/api/User";
         RequestQueue myQueue = Volley.newRequestQueue(this);
         JSONObject userData = new JSONObject();
@@ -214,6 +232,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         try {
             userData.put("Username", email);
             userData.put("Password", pass);
+            //userData.put("Role", role);
 
         } catch(JSONException e) {
             e.printStackTrace();

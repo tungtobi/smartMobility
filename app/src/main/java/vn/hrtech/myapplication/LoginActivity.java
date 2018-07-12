@@ -44,6 +44,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -191,8 +192,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplication(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                openDashboard();
-                Log.d("Token", response);
+                Log.d("Token", "|" + response + "|");
+                getUserData(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -217,6 +218,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         };
 
         myQueue.add(registrationRequest);
+    }
+
+    private void getUserData(final String token) {
+        String url = "http://smartdelivery.ml/api/User/";
+        RequestQueue myQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Login", response);
+                        User.data = new User();
+                        User.data.getObject(response);
+                        openDashboard();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Login", error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", token);
+                return headers;
+            }
+        };
+
+        myQueue.add(stringRequest);
+
     }
 
     private boolean isEmailValid(String email) {

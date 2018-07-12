@@ -4,18 +4,24 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MenuShipperActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_shipper);
 
-        CardView btnGetPackage = (CardView) findViewById(R.id.cardViewGetPack);
+        TextView textViewName = (TextView)findViewById(R.id.textViewName);
+        textViewName.setText(User.data.getId());
 
+        CardView btnGetPackage = (CardView) findViewById(R.id.cardViewGetPack);
         btnGetPackage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -25,7 +31,6 @@ public class MenuShipperActivity extends AppCompatActivity {
         });
 
         CardView btnReadList = (CardView) findViewById(R.id.cardViewReadList);
-
         btnReadList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
