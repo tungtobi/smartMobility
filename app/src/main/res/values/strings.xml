@@ -2,8 +2,13 @@
     <string name="app_name">Smart Delivery</string>
     <string name="title_activity_login">Đăng nhập</string>
     <string name="title_activity_register">Đăng kí</string>
-    <string name="title_activity_read_list">Lịch sử nhận hàng</string>
-    
+    <string name="title_activity_read_list_shipper">Lịch sử giao hàng</string>
+    <string name="title_activity_read_list">Lịch sử gửi/nhận hàng</string>
+    <string name="title_activity_open_box">Mở tủ hàng</string>
+    <string name="title_activity_account">Tài khoản</string>
+    <string name="title_activity_add_goods">Tạo đơn hàng</string>
+    <string name="title_activity_cabinet_list">Danh sách tủ cần giao</string>
+
     <!-- User -->
     <string name="user_customer">Khách hàng</string>
     <string name="user_shipper">Shipper</string>
@@ -39,4 +44,10 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
+
+    <!-- Add good -->
+    <string name="action_add_goods">Tạo</string>
+    <string name="sender">Người gửi</string>
+    <string name="receiver">Người nhận</string>
+
 </resources>

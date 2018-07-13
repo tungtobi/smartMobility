@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -32,6 +33,10 @@ public class ListAdapter extends ArrayAdapter<Order> {
         Order order = getItem(position);
 
         if (order != null) {
+            ImageView imageStatus = (ImageView)view.findViewById(R.id.imageStatus);
+            imageStatus.setImageResource(
+                    order.isComplete() ? R.drawable.ic_check_black_24dp : R.drawable.ic_loop_black_24dp);
+
             TextView textViewName = (TextView)view.findViewById(R.id.textViewName);
             textViewName.setText(order.getName());
 

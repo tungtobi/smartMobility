@@ -5,19 +5,6 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/colorPrimary"
-        android:clickable="true"
-        app:backgroundTint="?attr/colorPrimary"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -37,7 +24,7 @@
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
-                app:title="@string/title_activity_read_list"
+                app:title="@string/title_activity_read_list_shipper"
                 app:titleTextColor="@color/colorWhite" />
 
             <SearchView
@@ -61,7 +48,5 @@
         </ListView>
 
     </LinearLayout>
-
-
 
 </RelativeLayout>

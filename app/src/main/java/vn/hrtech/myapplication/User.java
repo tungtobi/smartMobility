@@ -3,12 +3,12 @@ package vn.hrtech.myapplication;
 import com.google.gson.Gson;
 
 public class User {
-    private String Id;
-    private String Username;
-    private String Password;
-    private int Role;
+    private String Id = "Test";
+    private String Username = "@test";
+    private String Password = "12345678";
+    private int Role = 2;
 
-    public static User data;
+    public static User data = new User();
 
     public String getId() {
         return Id;

@@ -2,14 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="30dp"
     android:gravity="center_horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            app:title="@string/title_activity_open_box"
+            app:titleTextColor="@color/colorWhite"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme" />
+
+        <SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:maxWidth="120dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp" />
+
+    </RelativeLayout>
+
     <ImageView
         android:layout_width="150dp"
         android:layout_height="120dp"
+        android:layout_marginTop="50dp"
         android:contentDescription="@string/app_name"
         app:srcCompat="@drawable/logo_smart_delivery" />
 

@@ -4,11 +4,14 @@ public class Order {
     private String name;
     private String id;
     private String describe;
+    private boolean isComplete;
+
 
     public Order(String name, String id, String describe) {
         this.name = name;
         this.id = id;
         this.describe = describe;
+        this.isComplete = false;
     }
 
     public String getName() {
@@ -33,5 +36,13 @@ public class Order {
 
     public void setDescribe(String describe) {
         this.describe = describe;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
     }
 }

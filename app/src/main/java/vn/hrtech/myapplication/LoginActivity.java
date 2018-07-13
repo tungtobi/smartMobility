@@ -191,7 +191,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         StringRequest registrationRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplication(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                 Log.d("Token", "|" + response + "|");
                 getUserData(response);
             }
@@ -231,6 +230,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         Log.d("Login", response);
                         User.data = new User();
                         User.data.getObject(response);
+                        Toast.makeText(getApplication(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                         openDashboard();
                     }
                 }, new Response.ErrorListener() {

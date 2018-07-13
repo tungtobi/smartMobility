@@ -9,32 +9,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MenuShipperActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu_shipper);
+        setContentView(R.layout.activity_menu);
 
         TextView textViewName = (TextView)findViewById(R.id.textViewName);
         textViewName.setText(User.data.getId());
-
-        CardView btnGetPackage = (CardView) findViewById(R.id.cardViewGetPack);
-        btnGetPackage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuShipperActivity.this, CabinetListActivity.class);
-                startActivity(intent);
-            }
-        });
 
         CardView btnReadList = (CardView) findViewById(R.id.cardViewReadList);
         btnReadList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuShipperActivity.this, OrderListShipperActivity.class);
+                Intent intent = new Intent(MenuActivity.this, OrderListActivity.class);
                 startActivity(intent);
             }
         });
@@ -43,7 +34,7 @@ public class MenuShipperActivity extends AppCompatActivity {
         btnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuShipperActivity.this, AccountActivity.class);
+                Intent intent = new Intent(MenuActivity.this, AccountActivity.class);
                 startActivity(intent);
             }
         });

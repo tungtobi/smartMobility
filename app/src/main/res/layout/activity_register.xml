@@ -99,36 +99,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bạn là: "/>
-
-                <RadioButton
-                    android:id="@+id/radioButtonCustomer"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/user_customer"
-                    android:onClick="checkButton"
-                    android:checked="true"/>
-
-                <RadioButton
-                    android:id="@+id/radioButtonShipper"
-                    android:layout_marginStart="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/user_shipper"
-                    android:onClick="checkButton"/>
-
-            </RadioGroup>
-
             <Button
                 android:id="@+id/email_register_button"
                 style="@style/ButtonPrimary"
