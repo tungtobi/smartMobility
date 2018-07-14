@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +96,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                openDashboard(false);
+                //attemptLogin();
             }
         });
 
@@ -110,10 +110,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-
     }
-
 
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
@@ -121,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void attemptLogin() {
 
-        // Reset errors.
+        // Reset errors
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
@@ -186,6 +183,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onResponse(String response) {
                 Log.d("Token", "|" + response + "|");
+                User.data.setToken(response);
                 getUserData(response);
             }
         }, new Response.ErrorListener() {
@@ -225,7 +223,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         User.data = new User();
                         User.data.getObject(response);
                         Toast.makeText(getApplication(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                        openDashboard();
+                        openDashboard(false);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -256,9 +254,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return password.length() > 6;
     }
 
-    private void openDashboard() {
-        Intent intentShipper = new Intent(LoginActivity.this, MenuShipperActivity.class);
-        startActivity(intentShipper);
+    private void openDashboard(boolean isShipper) {
+        Intent intent;
+        if (isShipper) {
+            intent = new Intent(LoginActivity.this, MenuShipperActivity.class);
+        } else {
+            intent = new Intent(LoginActivity.this, MenuActivity.class);
+        }
+        startActivity(intent);
     }
 
     @Override

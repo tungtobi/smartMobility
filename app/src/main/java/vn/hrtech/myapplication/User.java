@@ -7,8 +7,17 @@ public class User {
     private String Username = "@test";
     private String Password = "12345678";
     private int Role = 2;
+    private String Token;
 
     public static User data = new User();
+
+    public void setToken(String token) {
+        Token = token;
+    }
+
+    public String getToken() {
+        return Token;
+    }
 
     public String getId() {
         return Id;
