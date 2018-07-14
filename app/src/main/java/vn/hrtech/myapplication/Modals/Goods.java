@@ -1,4 +1,4 @@
-package vn.hrtech.myapplication;
+package vn.hrtech.myapplication.Modals;
 
 public class Goods {
     private String Id;

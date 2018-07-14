@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import vn.hrtech.myapplication.Modals.User;
+
 public class AccountActivity extends AppCompatActivity {
 
     private TextView mNameLabel;

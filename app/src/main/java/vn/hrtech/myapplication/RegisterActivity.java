@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -71,6 +72,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import vn.hrtech.myapplication.MyRequest.AuthRequest;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -148,15 +151,13 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_READ_CONTACTS) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 populateAutoComplete();
             }
         }
     }
-
 
     private void attemptRegister() {
         // Reset errors.
@@ -204,12 +205,15 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            post(email, password);
+            AuthRequest authRequest = new AuthRequest(this);
+            authRequest.postRegisterRequest(email, password);
+            //post(email, password);
         }
     }
 
+    /*
     private void post(String email, String pass) {
-        String reg_url = "http://18.188.242.150/api/User";
+        String reg_url = host + "api/User";
         RequestQueue myQueue = Volley.newRequestQueue(this);
         JSONObject userData = new JSONObject();
 
@@ -239,8 +243,14 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         JsonObjectRequest registrationRequest = new JsonObjectRequest(
                 Request.Method.POST, reg_url, userData, successHandler, failureHandler);
 
+        registrationRequest.setRetryPolicy(new DefaultRetryPolicy(
+                600000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         myQueue.add(registrationRequest);
     }
+    */
 
     private boolean isEmailValid(String email) {
         //Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(email);
@@ -253,7 +263,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         return password.length() > 6;
     }
 
-    private void login() {
+    public void login() {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
     }

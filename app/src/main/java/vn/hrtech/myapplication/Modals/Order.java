@@ -1,4 +1,4 @@
-package vn.hrtech.myapplication;
+package vn.hrtech.myapplication.Modals;
 
 public class Order {
     private String name;

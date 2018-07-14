@@ -1,4 +1,4 @@
-package vn.hrtech.myapplication;
+package vn.hrtech.myapplication.Modals;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import vn.hrtech.myapplication.Modals.Order;
+import vn.hrtech.myapplication.R;
 
 public class ListAdapter extends ArrayAdapter<Order> {
 

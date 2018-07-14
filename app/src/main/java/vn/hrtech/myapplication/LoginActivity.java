@@ -1,14 +1,6 @@
 package vn.hrtech.myapplication;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -16,14 +8,11 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,32 +25,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.EOFException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static android.Manifest.permission.READ_CONTACTS;
+import vn.hrtech.myapplication.Modals.User;
+import vn.hrtech.myapplication.MyRequest.AuthRequest;
 
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -96,8 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDashboard(false);
-                //attemptLogin();
+                attemptLogin();
             }
         });
 
@@ -160,10 +140,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            getToken(email, password);
+            AuthRequest authRequest = new AuthRequest(this);
+            authRequest.getToken(email, password);
+            if (!User.data.getToken().equals("")) {
+                authRequest.getUserDatas();
+            } else {
+                mEmailView.setError("Không tồn tại tài khoản");
+                mEmailView.requestFocus();
+            }
         }
     }
 
+    /*
     public void getToken(String email, String password) {
         RequestQueue myQueue = Volley.newRequestQueue(this);
         final JSONObject userData = new JSONObject();
@@ -177,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             e.printStackTrace();
         }
 
-        String url = "http://18.188.242.150/api/User/Login";
+        String url = host + "api/User/Login";
 
         StringRequest registrationRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -212,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void getUserData(final String token) {
-        String url = "http://smartdelivery.ml/api/User/";
+        String url = host + "api/User/";
         RequestQueue myQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -242,6 +230,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         myQueue.add(stringRequest);
 
     }
+    */
 
     private boolean isEmailValid(String email) {
         //Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(email);

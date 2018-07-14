@@ -1,4 +1,4 @@
-package vn.hrtech.myapplication;
+package vn.hrtech.myapplication.Modals;
 
 import com.google.gson.Gson;
 
@@ -7,7 +7,7 @@ public class User {
     private String Username = "@test";
     private String Password = "12345678";
     private int Role = 2;
-    private String Token;
+    private String Token = "";
 
     public static User data = new User();
 
@@ -54,7 +54,6 @@ public class User {
     public void getObject(String jsonString) {
         Gson gson = new Gson();
         User user = gson.fromJson(jsonString, User.class);
-
         this.setId(user.getId());
         this.setUsername(user.getUsername());
         this.setPassword(user.getPassword());
