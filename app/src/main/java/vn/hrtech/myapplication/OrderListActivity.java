@@ -11,15 +11,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import vn.hrtech.myapplication.Modals.Goods;
 import vn.hrtech.myapplication.Modals.ListAdapter;
 import vn.hrtech.myapplication.Modals.Order;
+import vn.hrtech.myapplication.MyRequest.GoodsRequest;
+import vn.hrtech.myapplication.MyRequest.VolleyCallback;
 
 public class OrderListActivity extends AppCompatActivity {
 
-    private FloatingActionButton btnAddGoods;
-    private ArrayList<Order> orders;
+    private ArrayList<Goods> orders;
     ListView listView;
     ListAdapter adapter;
 
@@ -30,7 +39,7 @@ public class OrderListActivity extends AppCompatActivity {
 
         listView = (ListView)findViewById(R.id.listView);
 
-        btnAddGoods = (FloatingActionButton)findViewById(R.id.floatingActionButton);
+        FloatingActionButton btnAddGoods = (FloatingActionButton)findViewById(R.id.floatingActionButton);
         btnAddGoods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,39 +47,32 @@ public class OrderListActivity extends AppCompatActivity {
             }
         });
 
-        orders = new ArrayList<Order>();
-        orders.add(new Order("ĐƠN HÀNG 01", "L01", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 02", "L34", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 03", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 04", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 05", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 06", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 07", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 08", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 09", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 10", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 11", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 12", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 13", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 14", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 15", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 16", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 17", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 18", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 19", "L78", "Miêu tả đơn hàng"));
-        orders.add(new Order("ĐƠN HÀNG 20", "L78", "Miêu tả đơn hàng"));
-
-
-        adapter = new ListAdapter(OrderListActivity.this, R.layout.order_custom_layout, orders);
-        listView.setAdapter(adapter);
+        setListAdapter();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!orders.get(position).isComplete()) {
+                if (orders.get(position).getStatus() == 5) {
                     Intent intent = new Intent(OrderListActivity.this, QrCodeScannerActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+    }
+
+    private void setListAdapter() {
+        GoodsRequest goodsRequest = new GoodsRequest(this);
+        goodsRequest.getGoodsList(new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONArray jsonArray) {
+                orders = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<Goods>>(){}.getType());
+                adapter = new ListAdapter(OrderListActivity.this, R.layout.order_custom_layout, orders);
+                listView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onError(VolleyError volleyError) {
+
             }
         });
     }
@@ -95,7 +97,8 @@ public class OrderListActivity extends AppCompatActivity {
                 String id = editTextSender.getText().toString().trim();
                 String describle = editTextReceiver.getText().toString().trim();
 
-                orders.add(0, new Order(id, "X", describle));
+                GoodsRequest goodsRequest = new GoodsRequest(OrderListActivity.this);
+                goodsRequest.createGoods(id, "");
 
                 listView.setAdapter(adapter);
 

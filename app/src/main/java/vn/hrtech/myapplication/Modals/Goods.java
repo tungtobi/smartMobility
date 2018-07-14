@@ -1,49 +1,92 @@
 package vn.hrtech.myapplication.Modals;
 
+import java.util.ArrayList;
+
 public class Goods {
     private String Id;
-    private String Sender;
-    private String Receiver;
-    private String Weight;
-    private boolean isComplete;
+    private String IdReceiver;
+    private String IdSender;
+    private String Name;
+    private String Status;
+    private String AddressRecive;
+    private ArrayList<String> cabinetEntities;
+    private ArrayList<String> scaleEntities;
+    private ArrayList<String> shipmentGoodEntities;
 
-    public void setComplete(boolean complete) {
-        isComplete = complete;
+    public int getStatus() {
+        if (Status != null) {
+            return Integer.parseInt(Status);
+        } else {
+            return -1;
+        }
     }
 
-    public boolean isComplete() {
-        return isComplete;
+    public String getIdSender() {
+        return IdSender;
+    }
+
+    public String getIdReceiver() {
+        return IdReceiver;
     }
 
     public String getId() {
         return Id;
     }
 
+    public String getName() {
+        return Name;
+    }
+
+    public String getAddressRecive() {
+        return AddressRecive;
+    }
+
+    public ArrayList<String> getCabinetEntities() {
+        return cabinetEntities;
+    }
+
+
+    public void setIdSender(String idSender) {
+        IdSender = idSender;
+    }
+
+    public void setIdReceiver(String idReceiver) {
+        IdReceiver = idReceiver;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
     public void setId(String id) {
         Id = id;
     }
 
-    public String getReceiver() {
-        return Receiver;
+    public ArrayList<String> getScaleEntities() {
+        return scaleEntities;
     }
 
-    public void setReceiver(String receiver) {
-        Receiver = receiver;
+    public ArrayList<String> getShipmentGoodEntities() {
+        return shipmentGoodEntities;
     }
 
-    public String getSender() {
-        return Sender;
+    public void setShipmentGoodEntities(ArrayList<String> shipmentGoodEntities) {
+        this.shipmentGoodEntities = shipmentGoodEntities;
     }
 
-    public void setSender(String sender) {
-        Sender = sender;
+    public void setScaleEntities(ArrayList<String> scaleEntities) {
+        this.scaleEntities = scaleEntities;
     }
 
-    public String getWeight() {
-        return Weight;
+    public void setCabinetEntities(ArrayList<String> cabinetEntities) {
+        this.cabinetEntities = cabinetEntities;
     }
 
-    public void setWeight(String weight) {
-        Weight = weight;
+    public void setAddressRecive(String addressRecive) {
+        AddressRecive = addressRecive;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
     }
 }

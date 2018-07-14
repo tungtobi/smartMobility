@@ -1,6 +1,11 @@
 package vn.hrtech.myapplication;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -32,6 +37,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,8 +47,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import vn.hrtech.myapplication.Modals.Goods;
 import vn.hrtech.myapplication.Modals.User;
 import vn.hrtech.myapplication.MyRequest.AuthRequest;
+import vn.hrtech.myapplication.MyRequest.GoodsRequest;
+import vn.hrtech.myapplication.MyRequest.VolleyCallback;
+
+import static android.Manifest.permission.READ_CONTACTS;
 
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -93,7 +104,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void populateAutoComplete() {
+        if (!mayRequestContacts()) {
+            return;
+        }
+
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    private boolean mayRequestContacts() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        if (checkSelfPermission(READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
+            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        @TargetApi(Build.VERSION_CODES.M)
+                        public void onClick(View v) {
+                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+                        }
+                    });
+        } else {
+            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
+        }
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_READ_CONTACTS) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                populateAutoComplete();
+            }
+        }
     }
 
     private void attemptLogin() {
@@ -110,7 +156,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-
 
         if (TextUtils.isEmpty(email)) {
             mPasswordView.setError(getString(R.string.error_field_required));
@@ -140,97 +185,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            AuthRequest authRequest = new AuthRequest(this);
-            authRequest.getToken(email, password);
-            if (!User.data.getToken().equals("")) {
+            /*AuthRequest authRequest = new AuthRequest(this);
+            authRequest.getToken(email, password, new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONArray jsonArray) {
+                    openDashboard(false);
+                }
+
+                @Override
+                public void onError(VolleyError volleyError) {
+                    mEmailView.setError("Không tồn tại tài khoản");
+                    mEmailView.requestFocus();
+                }
+            });*/
+            openDashboard(false);
+            /*if (!User.data.getToken().equals("")) {
                 authRequest.getUserDatas();
             } else {
                 mEmailView.setError("Không tồn tại tài khoản");
                 mEmailView.requestFocus();
-            }
+            }*/
+            /*GoodsRequest goodsRequest = new GoodsRequest(this);
+            goodsRequest.createGoods("3", password);
+            goodsRequest.createGoods("5", password);
+            goodsRequest.createGoods("6", password);*/
+
+            //GoodsRequest goodsRequest = new GoodsRequest(this);
+            //goodsRequest.getGoodsList();
+            //openDashboard(false);
         }
     }
-
-    /*
-    public void getToken(String email, String password) {
-        RequestQueue myQueue = Volley.newRequestQueue(this);
-        final JSONObject userData = new JSONObject();
-
-        try {
-            userData.put("Username", email);
-            userData.put("Password", password);
-
-        } catch(JSONException e) {
-            //something went wrong
-            e.printStackTrace();
-        }
-
-        String url = host + "api/User/Login";
-
-        StringRequest registrationRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("Token", "|" + response + "|");
-                User.data.setToken(response);
-                getUserData(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mEmailView.setError("Không tồn tại tài khoản");
-                mEmailView.requestFocus();
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return userData.toString().getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    return null;
-                }
-            }
-        };
-
-        myQueue.add(registrationRequest);
-    }
-
-    private void getUserData(final String token) {
-        String url = host + "api/User/";
-        RequestQueue myQueue = Volley.newRequestQueue(this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Login", response);
-                        User.data = new User();
-                        User.data.getObject(response);
-                        Toast.makeText(getApplication(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                        openDashboard(false);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Login", error.toString());
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", token);
-                return headers;
-            }
-        };
-
-        myQueue.add(stringRequest);
-
-    }
-    */
 
     private boolean isEmailValid(String email) {
         //Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(email);

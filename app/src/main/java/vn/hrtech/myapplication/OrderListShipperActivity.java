@@ -25,7 +25,7 @@ public class OrderListShipperActivity extends AppCompatActivity {
 
         listView = (ListView)findViewById(R.id.listView);
 
-        orders = new ArrayList<Order>();
+        /*orders = new ArrayList<Order>();
         orders.add(new Order("ĐƠN HÀNG 01", "L01", "Miêu tả đơn hàng"));
         orders.add(new Order("ĐƠN HÀNG 02", "L34", "Miêu tả đơn hàng"));
         orders.add(new Order("ĐƠN HÀNG 03", "L78", "Miêu tả đơn hàng"));
@@ -59,6 +59,6 @@ public class OrderListShipperActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }
-        });
+        });*/
     }
 }

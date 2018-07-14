@@ -17,8 +17,8 @@ public class CommonRequest {
     }
     public String getHost() {
         String host = "http://";
-        String subDomain = "";
-        String domain = "smartdelivery.ml";
+        String subDomain = "008fc312";
+        String domain = "ngrok.io";
         subDomain = subDomain == "" ? "" : subDomain + ".";
         host += subDomain + domain + "/";
         Log.d("HOST", host);

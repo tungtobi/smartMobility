@@ -1,6 +1,7 @@
 package vn.hrtech.myapplication.Modals;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,13 @@ import java.util.List;
 import vn.hrtech.myapplication.Modals.Order;
 import vn.hrtech.myapplication.R;
 
-public class ListAdapter extends ArrayAdapter<Order> {
+public class ListAdapter extends ArrayAdapter<Goods> {
 
     public ListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
-    public ListAdapter(Context context, int resource, List<Order> items) {
+    public ListAdapter(Context context, int resource, List<Goods> items) {
         super(context, resource, items);
     }
 
@@ -33,20 +34,27 @@ public class ListAdapter extends ArrayAdapter<Order> {
             view = layoutInflater.inflate(R.layout.order_custom_layout, null);
         }
 
-        Order order = getItem(position);
+        Goods goods = getItem(position);
 
-        if (order != null) {
+        if (goods != null) {
             ImageView imageStatus = (ImageView)view.findViewById(R.id.imageStatus);
-            imageStatus.setImageResource(
-                    order.isComplete() ? R.drawable.ic_check_black_24dp : R.drawable.ic_loop_black_24dp);
+            if (goods.getStatus() >= 0) {
+                //int status = Integer.parseInt(goods.getStatus());
+                if (goods.getStatus() < 5) {
+                    imageStatus.setImageResource(R.drawable.ic_loop_black_24dp);
+                } else if (goods.getStatus() == 5) {
+                    imageStatus.setImageResource(R.drawable.ic_input_black_24dp);
+                } else {
+                    imageStatus.setImageResource(R.drawable.ic_check_black_24dp);
+                }
 
-            TextView textViewName = (TextView)view.findViewById(R.id.textViewName);
-            textViewName.setText(order.getName());
+                TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
+                textViewName.setText(goods.getName());
 
-            TextView textViewDescribe = (TextView)view.findViewById(R.id.textViewDescribe);
-            textViewDescribe.setText(order.getDescribe());
+                TextView textViewDescribe = (TextView) view.findViewById(R.id.textViewDescribe);
+                textViewDescribe.setText(goods.getIdSender());
+            }
         }
-
         return view;
     }
 

@@ -211,47 +211,6 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         }
     }
 
-    /*
-    private void post(String email, String pass) {
-        String reg_url = host + "api/User";
-        RequestQueue myQueue = Volley.newRequestQueue(this);
-        JSONObject userData = new JSONObject();
-
-        try {
-            userData.put("Username", email);
-            userData.put("Password", pass);
-        } catch(JSONException e) {
-            e.printStackTrace();
-        }
-
-        Response.Listener<JSONObject> successHandler = new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Toast.makeText(getApplication(), "Đăng kí thành công", Toast.LENGTH_SHORT).show();
-                Log.d("Register", response.toString());
-                login();
-            }
-        };
-
-        Response.ErrorListener failureHandler = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplication(), "Đăng kí thất bại", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        JsonObjectRequest registrationRequest = new JsonObjectRequest(
-                Request.Method.POST, reg_url, userData, successHandler, failureHandler);
-
-        registrationRequest.setRetryPolicy(new DefaultRetryPolicy(
-                600000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
-        myQueue.add(registrationRequest);
-    }
-    */
-
     private boolean isEmailValid(String email) {
         //Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(email);
         //return matcher.matches();

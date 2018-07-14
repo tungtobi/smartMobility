@@ -28,7 +28,7 @@ public class AuthRequest extends CommonRequest{
     public AuthRequest(Context context) {
         super(context);
     }
-    public void getToken(String email, String password) {
+    public void getToken(String email, String password, final VolleyCallback callback) {
         String url = getHost() + "api/User/Login";
         final JSONObject userData = new JSONObject();
         try {
@@ -46,14 +46,12 @@ public class AuthRequest extends CommonRequest{
                 User.data.setToken(response);
                 Log.d("Token", "|" + response + "|");
                 Log.d("Token", "|" + User.data.getToken() + "|");
-                //getUserData(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("E", error.toString());
-                //mEmailView.setError("Không tồn tại tài khoản");
-                //mEmailView.requestFocus();
+                callback.onError(error);
             }
         }) {
             @Override
@@ -111,6 +109,7 @@ public class AuthRequest extends CommonRequest{
 
     public void postRegisterRequest(String email, String pass) {
         String reg_url = getHost() + "api/User";
+
 
         JSONObject userData = new JSONObject();
         try {
