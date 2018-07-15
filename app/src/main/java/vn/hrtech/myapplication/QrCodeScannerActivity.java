@@ -2,6 +2,7 @@ package vn.hrtech.myapplication;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -19,6 +21,9 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+
+import vn.hrtech.myapplication.Modals.User;
+import vn.hrtech.myapplication.MyRequest.CabinetRequest;
 
 public class QrCodeScannerActivity extends AppCompatActivity {
 
@@ -54,7 +59,7 @@ public class QrCodeScannerActivity extends AppCompatActivity {
 
         cameraPreview = (SurfaceView) findViewById(R.id.cameraPreview);
         textViewResult = (TextView) findViewById(R.id.textViewResult);
-
+        textViewResult.setVisibility(View.INVISIBLE);
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.QR_CODE)
                 .build();
@@ -90,6 +95,14 @@ public class QrCodeScannerActivity extends AppCompatActivity {
                 cameraSource.stop();
             }
         });
+        TextView title = (TextView)findViewById(R.id.title);
+        if (!User.data.getUsername().equals("shipper")) {
+            if (User.data.getUsername().equals("sender")) {
+                title.setText("Quét LOCKER 1");
+            } else {
+                title.setText("Quét LOCKER 2");
+            }
+        }
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
@@ -106,7 +119,23 @@ public class QrCodeScannerActivity extends AppCompatActivity {
                         public void run() {
                             Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                             vibrator.vibrate(1000);
-                            textViewResult.setText(qrcodes.valueAt(0).displayValue);
+                            //textViewResult.setText(qrcodes.valueAt(0).displayValue);
+                            //TODO: làm gì đó
+                            CabinetRequest cabinetRequest = new CabinetRequest(QrCodeScannerActivity.this);
+                            String url;
+                            if (User.data.getUsername().equals("sender")) {
+                                url = "http://smartdelivery.ml/api/Auth/CustomerSend/locker1";
+                            } else if (User.data.getUsername().equals("receive")) {
+                                url = "http://smartdelivery.ml/api/Auth/CustomerRecievie/locker2";
+                            } else {
+                                if (getIntent().getStringExtra("key").equals("1")) {
+                                    url = "http://smartdelivery.ml/api/Auth/ShipperSend/locker1";
+                                } else {
+                                    url = "http://smartdelivery.ml/api/Auth/ShipperRecievie/015fabf4-2436-4933-a294-0a25ae4080a1/locker2";
+                                }
+                            }
+                            cabinetRequest.openCabinet(url);
+                            finish();
                         }
                     });
                 }

@@ -7,11 +7,20 @@ public class Goods {
     private String IdReceiver;
     private String IdSender;
     private String Name;
+    private String Code;
     private String Status;
     private String AddressRecive;
-    private ArrayList<String> cabinetEntities;
+    private ArrayList<Cabinet> cabinetEntities;
     private ArrayList<String> scaleEntities;
-    private ArrayList<String> shipmentGoodEntities;
+    private ArrayList<ShipmentGood> shipmentGoodEntities;
+
+    public String getCode() {
+        return Code;
+    }
+
+    public void setCode(String code) {
+        Code = code;
+    }
 
     public int getStatus() {
         if (Status != null) {
@@ -41,7 +50,7 @@ public class Goods {
         return AddressRecive;
     }
 
-    public ArrayList<String> getCabinetEntities() {
+    public ArrayList<Cabinet> getCabinetEntities() {
         return cabinetEntities;
     }
 
@@ -66,11 +75,11 @@ public class Goods {
         return scaleEntities;
     }
 
-    public ArrayList<String> getShipmentGoodEntities() {
+    public ArrayList<ShipmentGood> getShipmentGoodEntities() {
         return shipmentGoodEntities;
     }
 
-    public void setShipmentGoodEntities(ArrayList<String> shipmentGoodEntities) {
+    public void setShipmentGoodEntities(ArrayList<ShipmentGood> shipmentGoodEntities) {
         this.shipmentGoodEntities = shipmentGoodEntities;
     }
 
@@ -78,7 +87,7 @@ public class Goods {
         this.scaleEntities = scaleEntities;
     }
 
-    public void setCabinetEntities(ArrayList<String> cabinetEntities) {
+    public void setCabinetEntities(ArrayList<Cabinet> cabinetEntities) {
         this.cabinetEntities = cabinetEntities;
     }
 

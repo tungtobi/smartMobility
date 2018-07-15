@@ -46,6 +46,7 @@ public class AuthRequest extends CommonRequest{
                 User.data.setToken(response);
                 Log.d("Token", "|" + response + "|");
                 Log.d("Token", "|" + User.data.getToken() + "|");
+                callback.onSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -102,7 +103,8 @@ public class AuthRequest extends CommonRequest{
                 return headers;
             }
         };
-        setTimeout(stringRequest, 600000);
+
+        //setTimeout(stringRequest, 600000);
 
         myQueue.add(stringRequest);
     }

@@ -5,7 +5,16 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 
-public interface VolleyCallback {
-    void onSuccess(JSONArray jsonArray);
-    void onError(VolleyError volleyError);
+public class VolleyCallback {
+    public void onSuccess(JSONArray jsonArray) {
+
+    }
+
+    public void onSuccess(String string) {
+
+    }
+
+    public void onError(VolleyError volleyError){
+
+    }
 }

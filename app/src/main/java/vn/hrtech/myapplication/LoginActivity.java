@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -185,54 +185,44 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            /*AuthRequest authRequest = new AuthRequest(this);
+            AuthRequest authRequest = new AuthRequest(this);
             authRequest.getToken(email, password, new VolleyCallback() {
                 @Override
-                public void onSuccess(JSONArray jsonArray) {
-                    openDashboard(false);
-                }
+                public void onSuccess(String string) {
+                    User.data.setUsername(email);
+                    Log.d("U", User.data.getUsername());
+                    openDashboard(email.equals("shipper"));
 
+                }
                 @Override
                 public void onError(VolleyError volleyError) {
                     mEmailView.setError("Không tồn tại tài khoản");
                     mEmailView.requestFocus();
                 }
-            });*/
-            openDashboard(false);
-            /*if (!User.data.getToken().equals("")) {
-                authRequest.getUserDatas();
-            } else {
-                mEmailView.setError("Không tồn tại tài khoản");
-                mEmailView.requestFocus();
-            }*/
-            /*GoodsRequest goodsRequest = new GoodsRequest(this);
-            goodsRequest.createGoods("3", password);
-            goodsRequest.createGoods("5", password);
-            goodsRequest.createGoods("6", password);*/
-
-            //GoodsRequest goodsRequest = new GoodsRequest(this);
-            //goodsRequest.getGoodsList();
-            //openDashboard(false);
+            });
         }
     }
 
     private boolean isEmailValid(String email) {
         //Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(email);
         //return matcher.matches();
-        return email.contains("@");
+        //return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 6;
+        return password.length() > 0;
     }
 
     private void openDashboard(boolean isShipper) {
         Intent intent;
         if (isShipper) {
             intent = new Intent(LoginActivity.this, MenuShipperActivity.class);
+            User.data.setRole("4");
         } else {
             intent = new Intent(LoginActivity.this, MenuActivity.class);
+            User.data.setRole("2");
         }
         startActivity(intent);
     }

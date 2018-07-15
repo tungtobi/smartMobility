@@ -19,7 +19,7 @@ public class MenuShipperActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_shipper);
 
         TextView textViewName = (TextView)findViewById(R.id.textViewName);
-        textViewName.setText(User.data.getId());
+        textViewName.setText(User.data.getUsername());
 
         CardView btnGetPackage = (CardView) findViewById(R.id.cardViewGetPack);
         btnGetPackage.setOnClickListener(new View.OnClickListener() {

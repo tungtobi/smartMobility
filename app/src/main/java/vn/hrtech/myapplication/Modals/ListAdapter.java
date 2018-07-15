@@ -52,7 +52,7 @@ public class ListAdapter extends ArrayAdapter<Goods> {
                 textViewName.setText(goods.getName());
 
                 TextView textViewDescribe = (TextView) view.findViewById(R.id.textViewDescribe);
-                textViewDescribe.setText(goods.getIdSender());
+                textViewDescribe.setText(goods.getAddressRecive());
             }
         }
         return view;

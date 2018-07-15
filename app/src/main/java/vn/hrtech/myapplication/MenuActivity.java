@@ -19,7 +19,7 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         TextView textViewName = (TextView)findViewById(R.id.textViewName);
-        textViewName.setText(User.data.getId());
+        textViewName.setText(User.data.getUsername());
 
         CardView btnReadList = (CardView) findViewById(R.id.cardViewReadList);
         btnReadList.setOnClickListener(new View.OnClickListener() {

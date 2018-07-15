@@ -21,7 +21,9 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vn.hrtech.myapplication.Modals.Goods;
 import vn.hrtech.myapplication.Modals.User;
@@ -31,7 +33,7 @@ public class GoodsRequest extends CommonRequest{
         super(context);
     }
 
-    public void createGoods(String idSender, String idReceiver) {
+    public void createGoods(String name, String idSender, String idReceiver, String addressRecive) {
         String url = getHost() + "api/Good";
 
         final JSONObject goods = new JSONObject();
@@ -39,9 +41,9 @@ public class GoodsRequest extends CommonRequest{
         try {
             goods.put("IdReceiver", "b42725b1-f0bc-47e8-8f1f-3b2cbd854a93");
             goods.put("IdSender", "b42725b1-f0bc-47e8-8f1f-3b2cbd854a93");
-            goods.put("AddressRecive", "somewhere");
-            goods.put("Name", "abc");
-            goods.put("Status", idSender);
+            goods.put("AddressRecive", addressRecive);
+            goods.put("Name", name);
+            goods.put("Status", "0");
 
         } catch(JSONException e) {
             //something went wrong
@@ -51,7 +53,7 @@ public class GoodsRequest extends CommonRequest{
         Response.Listener<JSONObject> successHandler = new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Toast.makeText(context, "thành công", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "thành công", Toast.LENGTH_SHORT).show();
                 Log.d("Response", response.toString());
             }
         };
@@ -59,18 +61,18 @@ public class GoodsRequest extends CommonRequest{
         Response.ErrorListener failureHandler = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "thất bại", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Kiểm tra lại kết nối", Toast.LENGTH_SHORT).show();
             }
         };
 
-        JsonObjectRequest registrationRequest = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url, goods, successHandler, failureHandler);
 
-        myQueue.add(registrationRequest);
+        myQueue.add(jsonObjectRequest);
     }
 
     public void getGoodsList(final VolleyCallback callback) {
-        String url = getHost() + "api/Good/sender/b42725b1-f0bc-47e8-8f1f-3b2cbd854a93";
+        String url = getHost() + "api/Good/sender/1b7dddb3-90a6-4d1a-b6bb-f967766e19e6";
 
         ArrayList<Goods> goodses = new ArrayList<Goods>();
 
@@ -83,9 +85,17 @@ public class GoodsRequest extends CommonRequest{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Kiểm tra lại kết nối", Toast.LENGTH_SHORT).show();
                 Log.e("E", "onErrorResponse: " + error.toString());
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", User.data.getToken());
+                return headers;
+        }
+        };
 
         setTimeout(request, 600000);
 

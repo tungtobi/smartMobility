@@ -6,7 +6,7 @@ public class User {
     private String Id = "Test";
     private String Username = "@test";
     private String Password = "12345678";
-    private int Role = 2;
+    private String Role = "";
     private String Token = "";
 
     public static User data = new User();
@@ -43,11 +43,11 @@ public class User {
         this.Password = Password;
     }
 
-    public int getRole() {
+    public String getRole() {
         return Role;
     }
 
-    public void setRole(int Role) {
+    public void setRole(String Role) {
         this.Role = Role;
     }
 

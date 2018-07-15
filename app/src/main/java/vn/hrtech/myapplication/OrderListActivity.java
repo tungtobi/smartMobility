@@ -52,10 +52,8 @@ public class OrderListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (orders.get(position).getStatus() == 5) {
                     Intent intent = new Intent(OrderListActivity.this, QrCodeScannerActivity.class);
                     startActivity(intent);
-                }
             }
         });
     }
@@ -98,7 +96,7 @@ public class OrderListActivity extends AppCompatActivity {
                 String describle = editTextReceiver.getText().toString().trim();
 
                 GoodsRequest goodsRequest = new GoodsRequest(OrderListActivity.this);
-                goodsRequest.createGoods(id, "");
+                //goodsRequest.createGoods(id, "");
 
                 listView.setAdapter(adapter);
 

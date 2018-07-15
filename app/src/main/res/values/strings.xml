@@ -14,7 +14,7 @@
     <string name="user_shipper">Shipper</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_account">Email</string>
+    <string name="prompt_account">Tài khoản</string>
     <string name="prompt_password">Mật khẩu</string>
     <string name="prompt_password_twice">Nhập lại mật khẩu</string>
     <string name="action_sign_in">Đăng nhập</string>
